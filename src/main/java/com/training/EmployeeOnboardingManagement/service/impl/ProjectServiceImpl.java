@@ -19,6 +19,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<TaskEntity> getTasksForProject(Integer id) {
         List<ProjectHasProjectTaskEntity> projectHasProjectTaskList = projectHasProjectTaskService.getTasksForProject(id);
-
+        return null;
     }
 }

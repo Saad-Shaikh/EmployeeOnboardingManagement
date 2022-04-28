@@ -4,6 +4,7 @@ import com.training.EmployeeOnboardingManagement.dao.ProjectHasProjectTaskReposi
 import com.training.EmployeeOnboardingManagement.entity.ProjectEntity;
 import com.training.EmployeeOnboardingManagement.entity.ProjectHasProjectTaskEntity;
 import com.training.EmployeeOnboardingManagement.entity.TaskEntity;
+import com.training.EmployeeOnboardingManagement.enums.TaskStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class ProjectHasProjectTaskServiceImpl implements ProjectHasProjectTaskSe
         for (TaskEntity prTask :
                 projectTasks) {
             ProjectHasProjectTaskEntity projectHasProjectTask = new ProjectHasProjectTaskEntity(
-                    savedProject, prTask, "", null, null, "", ""
+                    savedProject, prTask, "", null, null, "", TaskStatus.ASSIGNED
             );
             projectHasProjectTaskRepository.save(projectHasProjectTask);
         }
@@ -27,6 +28,7 @@ public class ProjectHasProjectTaskServiceImpl implements ProjectHasProjectTaskSe
 
     @Override
     public List<ProjectHasProjectTaskEntity> getTasksForProject(Integer id) {
-        return projectHasProjectTaskRepository.findProjectTasksByProjectId(id);
+//        return projectHasProjectTaskRepository.findProjectTasksByProjectId(id);
+        return null;
     }
 }

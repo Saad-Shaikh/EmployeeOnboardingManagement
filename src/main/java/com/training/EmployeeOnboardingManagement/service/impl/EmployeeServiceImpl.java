@@ -2,22 +2,20 @@ package com.training.EmployeeOnboardingManagement.service;
 
 import com.training.EmployeeOnboardingManagement.dao.EmployeeRepository;
 import com.training.EmployeeOnboardingManagement.entity.*;
+import com.training.EmployeeOnboardingManagement.exception.ErrorMessage;
+import com.training.EmployeeOnboardingManagement.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
-    @Autowired
-    private ProjectService projectService;
-    @Autowired
-    private ProjectTaskService projectTaskService;
-    @Autowired
-    private ProjectHasProjectTaskService projectHasProjectTaskService;
 
     @Override
     public List<EmployeeEntity> getAllEmployees() {
@@ -32,12 +30,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity getEmployeeById(Integer id) {
         return employeeRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException("Employee with id " + id + " does not exist!")
+                () -> new NotFoundException(new ErrorMessage("Employee with id " + id + " does not exist!"))
         );
     }
 
     @Override
-    @Transactional
     public EmployeeEntity updateEmployeeById(Integer id, EmployeeEntity newEmployee) {
         EmployeeEntity employee = employeeRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("Employee with id " + id + " does not exist!")
@@ -54,15 +51,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
     public EmployeeEntity updateEmployeeStatusById(Integer id, String status) {
         EmployeeEntity employee = employeeRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("Employee with id " + id + " does not exist!")
         );
 
-        if (!employee.getStatus().equals(status)) {
+        /*if (!employee.getStatus().equals(status)) {
             employee.setStatus(status);
-        }
+        }*/
         return employee;
     }
 /*

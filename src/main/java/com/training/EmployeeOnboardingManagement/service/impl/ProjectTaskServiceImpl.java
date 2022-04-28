@@ -2,6 +2,7 @@ package com.training.EmployeeOnboardingManagement.service;
 
 import com.training.EmployeeOnboardingManagement.dao.ProjectTaskRepository;
 import com.training.EmployeeOnboardingManagement.entity.TaskEntity;
+import com.training.EmployeeOnboardingManagement.enums.TaskType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
     @Override
     public List<TaskEntity> getProjectTasks() {
         return projectTaskRepository.findAll().stream().filter(
-                task -> task.getTaskType().equals(TaskEntity.taskTypes.PROJECT)
+                task -> task.getTaskType().equals(TaskType.PROJECT)
         ).collect(Collectors.toList());
     }
 }
