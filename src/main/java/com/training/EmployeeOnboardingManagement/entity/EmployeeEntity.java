@@ -1,5 +1,6 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
+import com.training.EmployeeOnboardingManagement.converter.DesignationConverter;
 import com.training.EmployeeOnboardingManagement.enums.Designation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class EmployeeEntity {
     private Date dob;
     private String address;
     private String phone;
+    @Convert(converter = DesignationConverter.class)
     private Designation designation;
     @Temporal(TemporalType.DATE)
     private Date onboardingStartDate;

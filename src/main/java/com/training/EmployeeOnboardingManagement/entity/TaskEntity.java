@@ -1,5 +1,6 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
+import com.training.EmployeeOnboardingManagement.converter.TaskTypeConverter;
 import com.training.EmployeeOnboardingManagement.enums.TaskType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class TaskEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String task;
+    @Convert(converter = TaskTypeConverter.class)
     private TaskType taskType;
 
     public TaskEntity(String task, TaskType taskType) {
