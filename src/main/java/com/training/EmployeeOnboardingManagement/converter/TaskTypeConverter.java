@@ -7,14 +7,14 @@ import javax.persistence.Converter;
 import java.util.Arrays;
 
 @Converter
-public class TaskTypeConverter implements AttributeConverter<String, Integer> {
+public class TaskTypeConverter implements AttributeConverter<TaskType, Integer> {
     @Override
-    public Integer convertToDatabaseColumn(String attribute) {
-        return Arrays.stream(TaskType.values()).filter(taskType -> taskType.getValue().equals(attribute)).findFirst().get().getId();
+    public Integer convertToDatabaseColumn(TaskType taskType) {
+        return taskType.getId();
     }
 
     @Override
-    public String convertToEntityAttribute(Integer dbData) {
-        return Arrays.stream(TaskType.values()).filter(taskType -> taskType.getId() == dbData).findFirst().get().getValue();
+    public TaskType convertToEntityAttribute(Integer dbData) {
+        return Arrays.stream(TaskType.values()).filter(taskType -> taskType.getId() == dbData).findFirst().get();
     }
 }
