@@ -1,20 +1,25 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
 import com.training.EmployeeOnboardingManagement.converter.DesignationConverter;
+import com.training.EmployeeOnboardingManagement.converter.EmployeeStatusConverter;
 import com.training.EmployeeOnboardingManagement.enums.Designation;
+import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "employee")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class EmployeeEntity {
+//    INSERT INTO "PUBLIC"."EMPLOYEE_ENTITY"("ID","ADDRESS","DESIGNATION","DOB","NAME","ONBOARDING_END_DATE","ONBOARDING_START_DATE","PHONE","STATUS","REF_PROJECT_ID")VALUES(1,'Pune',1,TO_DATE('16/11/1997', 'DD/MM/YYYY'),'Saad',TO_DATE('16/04/1997', 'DD/MM/YYYY'),TO_DATE('16/05/1997', 'DD/MM/YYYY'),'123',1,1)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -29,25 +34,27 @@ public class EmployeeEntity {
     private Date onboardingStartDate;
     @Temporal(TemporalType.DATE)
     private Date onboardingEndDate;
+    @ManyToMany
+    @JoinTable(
+            name = "employee_has_mentors",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "mentor_id")
+    )
+    private Set<EmployeeEntity> mentoredBy = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "employee_has_mentors",
+            joinColumns = @JoinColumn(name = "mentor_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
+    private Set<EmployeeEntity> mentorOf = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ref_project_id", referencedColumnName = "id")
+    @JoinColumn(name = "ref_project", referencedColumnName = "id")
     private ProjectEntity project;
-    private String status;
+    @Convert(converter = EmployeeStatusConverter.class)
+    private EmployeeStatus status;
 
-    public EmployeeEntity(String name, Date dob, String address, String phone, Designation designation, Date onboardingStartDate, Date onboardingEndDate, ProjectEntity project, String status) {
-        this.name = name;
-        this.dob = dob;
-        this.address = address;
-        this.phone = phone;
-        this.designation = designation;
-        this.onboardingStartDate = onboardingStartDate;
-        this.onboardingEndDate = onboardingEndDate;
-        this.project = project;
-        this.status = status;
-    }
-
-//    for EmployeeDTOToEmployee conversion
-    public EmployeeEntity(Integer id, String name, Date dob, String address, String phone, Designation designation, Date onboardingStartDate, Date onboardingEndDate, String status) {
+    public EmployeeEntity(Integer id, String name, Date dob, String address, String phone, Designation designation, Date onboardingStartDate, Date onboardingEndDate, EmployeeStatus status) {
         this.id = id;
         this.name = name;
         this.dob = dob;
