@@ -19,7 +19,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 public class EmployeeEntity {
-//    INSERT INTO "PUBLIC"."EMPLOYEE_ENTITY"("ID","ADDRESS","DESIGNATION","DOB","NAME","ONBOARDING_END_DATE","ONBOARDING_START_DATE","PHONE","STATUS","REF_PROJECT_ID")VALUES(1,'Pune',1,TO_DATE('16/11/1997', 'DD/MM/YYYY'),'Saad',TO_DATE('16/04/1997', 'DD/MM/YYYY'),TO_DATE('16/05/1997', 'DD/MM/YYYY'),'123',1,1)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
