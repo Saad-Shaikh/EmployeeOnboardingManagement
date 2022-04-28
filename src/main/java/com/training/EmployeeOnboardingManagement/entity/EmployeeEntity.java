@@ -1,5 +1,6 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
+import com.training.EmployeeOnboardingManagement.enums.Designation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class EmployeeEntity {
     private Date dob;
     private String address;
     private String phone;
-    private String designation;
+    private Designation designation;
     @Temporal(TemporalType.DATE)
     private Date onboardingStartDate;
     @Temporal(TemporalType.DATE)
@@ -31,7 +32,7 @@ public class EmployeeEntity {
     private ProjectEntity project;
     private String status;
 
-    public EmployeeEntity(String name, Date dob, String address, String phone, String designation, Date onboardingStartDate, Date onboardingEndDate, ProjectEntity project, String status) {
+    public EmployeeEntity(String name, Date dob, String address, String phone, Designation designation, Date onboardingStartDate, Date onboardingEndDate, ProjectEntity project, String status) {
         this.name = name;
         this.dob = dob;
         this.address = address;
@@ -44,7 +45,7 @@ public class EmployeeEntity {
     }
 
 //    for EmployeeDTOToEmployee conversion
-    public EmployeeEntity(Integer id, String name, Date dob, String address, String phone, String designation, Date onboardingStartDate, Date onboardingEndDate, String status) {
+    public EmployeeEntity(Integer id, String name, Date dob, String address, String phone, Designation designation, Date onboardingStartDate, Date onboardingEndDate, String status) {
         this.id = id;
         this.name = name;
         this.dob = dob;

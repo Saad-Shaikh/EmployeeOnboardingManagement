@@ -1,6 +1,7 @@
 package com.training.EmployeeOnboardingManagement.dto;
 
 import com.training.EmployeeOnboardingManagement.entity.EmployeeEntity;
+import com.training.EmployeeOnboardingManagement.enums.Designation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ public class EmployeeDTO {
     private Date dob;
     private String address;
     private String phone;
-    private String designation;
+    private Designation designation;
     private Date onboardingStartDate;
     private Date onboardingEndDate;
     private String status;
