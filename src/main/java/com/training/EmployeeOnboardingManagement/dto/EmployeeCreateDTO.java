@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CreateEmployeeDTO {
+public class EmployeeCreateDTO {
     private String name;
     private Date dob;
     private String address;

@@ -35,45 +35,45 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<DetailedEmployeeDTO> getAllEmployees() {
+    public List<EmployeeDetailDTO> getAllEmployees() {
         List<EmployeeEntity> employees = employeeRepository.findAll();
-        List<DetailedEmployeeDTO> employeeDTOs = employeeMapper.mapEntityListToDetailedDTOList(employees);
+        List<EmployeeDetailDTO> employeeDTOs = employeeMapper.mapEntityListToDetailDTOList(employees);
         return employeeDTOs;
     }
 
     @Override
-    public DetailedEmployeeDTO createEmployee(CreateEmployeeDTO employee) {
+    public EmployeeDetailDTO createEmployee(EmployeeCreateDTO employee) {
         EmployeeEntity employeeEntity = employeeMapper.mapCreateDTOToEntity(employee);
         employeeValidator.validateEmployee(employeeEntity);
-        return employeeMapper.mapEntityToDetailedDTO(employeeRepository.save(employeeEntity));
+        return employeeMapper.mapEntityToDetailDTO(employeeRepository.save(employeeEntity));
     }
 
     @Override
-    public DetailedEmployeeDTO getEmployeeById(Integer id) {
+    public EmployeeDetailDTO getEmployeeById(Integer id) {
         EmployeeEntity employee =  getEmployeeEntityById(id);
-        return employeeMapper.mapEntityToDetailedDTO(employee);
+        return employeeMapper.mapEntityToDetailDTO(employee);
     }
 
     @Override
-    public DetailedEmployeeDTO updateEmployeeById(Integer id, UpdateEmployeeDTO newEmployee) {
+    public EmployeeDetailDTO updateEmployeeById(Integer id, EmployeeUpdateDTO newEmployee) {
         EmployeeEntity employee = getEmployeeEntityById(id);
         employeeMapper.mapUpdateDTOToEntity(newEmployee, employee);
-        return employeeMapper.mapEntityToDetailedDTO(employee);
+        return employeeMapper.mapEntityToDetailDTO(employee);
     }
 
     @Override
-    public DetailedEmployeeDTO updateEmployeeStatusById(Integer id, EmployeeStatusPatchDTO employeeStatusPatchDTO) {
+    public EmployeeDetailDTO updateEmployeeStatusById(Integer id, EmployeeStatusPatchDTO employeeStatusPatchDTO) {
         EmployeeEntity employee = getEmployeeEntityById(id);
         if (!employee.getStatus().equals(employeeStatusPatchDTO.getStatus())) {
             employeeMapper.mapStatusPatchDTOToEntity(employeeStatusPatchDTO, employee);
         }
-        return employeeMapper.mapEntityToDetailedDTO(employee);
+        return employeeMapper.mapEntityToDetailDTO(employee);
     }
 
-    public List<DetailedEmployeeDTO> searchEmployeesByFields(EmployeeSearchDTO employeeSearchDTO) {
+    public List<EmployeeDetailDTO> searchEmployeesByFields(EmployeeSearchDTO employeeSearchDTO) {
         BooleanBuilder builder = constructBooleanBuilderForSearch(employeeSearchDTO);
         List<EmployeeEntity> employees = (List<EmployeeEntity>) employeeRepository.findAll(builder);
-        return employeeMapper.mapEntityListToDetailedDTOList(employees);
+        return employeeMapper.mapEntityListToDetailDTOList(employees);
     }
 
     private BooleanBuilder constructBooleanBuilderForSearch(EmployeeSearchDTO employeeSearchDTO) {

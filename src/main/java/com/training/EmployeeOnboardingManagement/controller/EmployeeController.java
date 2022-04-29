@@ -14,32 +14,32 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<DetailedEmployeeDTO> getAllEmployees() {
+    public List<EmployeeDetailDTO> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
     @PostMapping
-    public DetailedEmployeeDTO createEmployee(@RequestBody CreateEmployeeDTO employeeDTO) {
+    public EmployeeDetailDTO createEmployee(@RequestBody EmployeeCreateDTO employeeDTO) {
         return employeeService.createEmployee(employeeDTO);
     }
 
     @GetMapping(path = "{id}")
-    public DetailedEmployeeDTO getEmployeeById(@PathVariable("id") Integer id) {
+    public EmployeeDetailDTO getEmployeeById(@PathVariable("id") Integer id) {
         return employeeService.getEmployeeById(id);
     }
 
     @PutMapping(path = "{id}")
-    public DetailedEmployeeDTO updateEmployeeById(@PathVariable("id") Integer id, @RequestBody UpdateEmployeeDTO employeeDTO) {
+    public EmployeeDetailDTO updateEmployeeById(@PathVariable("id") Integer id, @RequestBody EmployeeUpdateDTO employeeDTO) {
         return employeeService.updateEmployeeById(id, employeeDTO);
     }
 
     @PatchMapping(path = "{id}")
-    public DetailedEmployeeDTO updateEmployeeStatusById(@PathVariable("id") Integer id, @RequestBody EmployeeStatusPatchDTO employeeStatusPatchDTO) {
+    public EmployeeDetailDTO updateEmployeeStatusById(@PathVariable("id") Integer id, @RequestBody EmployeeStatusPatchDTO employeeStatusPatchDTO) {
         return employeeService.updateEmployeeStatusById(id, employeeStatusPatchDTO);
     }
 
     @GetMapping(path = "search")
-    public List<DetailedEmployeeDTO> searchEmployeesByFields(@RequestBody EmployeeSearchDTO employeeSearchDTO) {
+    public List<EmployeeDetailDTO> searchEmployeesByFields(@RequestBody EmployeeSearchDTO employeeSearchDTO) {
         return employeeService.searchEmployeesByFields(employeeSearchDTO);
     }
 }

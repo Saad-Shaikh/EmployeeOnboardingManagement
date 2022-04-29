@@ -1,9 +1,9 @@
 package com.training.EmployeeOnboardingManagement.mapper;
 
-import com.training.EmployeeOnboardingManagement.dto.CreateEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.DetailedEmployeeDTO;
+import com.training.EmployeeOnboardingManagement.dto.EmployeeCreateDTO;
+import com.training.EmployeeOnboardingManagement.dto.EmployeeDetailDTO;
 import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
-import com.training.EmployeeOnboardingManagement.dto.UpdateEmployeeDTO;
+import com.training.EmployeeOnboardingManagement.dto.EmployeeUpdateDTO;
 import com.training.EmployeeOnboardingManagement.entity.EmployeeEntity;
 import org.mapstruct.*;
 
@@ -15,15 +15,15 @@ public interface EmployeeMapper {
     @Mapping(target = "mentoredBy", ignore = true)
     @Mapping(target = "mentorOf", ignore = true)
     @Mapping(target = "project", ignore = true)
-    EmployeeEntity mapCreateDTOToEntity(CreateEmployeeDTO employeeDTO);
+    EmployeeEntity mapCreateDTOToEntity(EmployeeCreateDTO employeeDTO);
 
-    DetailedEmployeeDTO mapEntityToDetailedDTO(EmployeeEntity employee);
+    EmployeeDetailDTO mapEntityToDetailDTO(EmployeeEntity employee);
 
     @Mapping(target = "mentorOf", ignore = true)
     @Mapping(target = "project", ignore = true)
-    EmployeeEntity mapDetailedDTOToEntity(DetailedEmployeeDTO employeeDTO);
+    EmployeeEntity mapDetailDTOToEntity(EmployeeDetailDTO employeeDTO);
 
-    List<DetailedEmployeeDTO> mapEntityListToDetailedDTOList(List<EmployeeEntity> employees);
+    List<EmployeeDetailDTO> mapEntityListToDetailDTOList(List<EmployeeEntity> employees);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "onboardingStartDate", ignore = true)
@@ -31,7 +31,7 @@ public interface EmployeeMapper {
     @Mapping(target = "mentorOf", ignore = true)
     @Mapping(target = "project", ignore = true)
     @Mapping(target = "status", ignore = true)
-    void mapUpdateDTOToEntity(UpdateEmployeeDTO employeeDTO, @MappingTarget EmployeeEntity employee);
+    void mapUpdateDTOToEntity(EmployeeUpdateDTO employeeDTO, @MappingTarget EmployeeEntity employee);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", ignore = true)
