@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,15 +23,29 @@ public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @NotBlank(message = "Name cannot be blank")
     private String name;
+
+    @PastOrPresent(message = "Date of birth cannot be in the future")
     @Temporal(TemporalType.DATE)
     private Date dob;
+
+    @Size(min = 10, max = 100)
     private String address;
+
+    @Size(min = 10, max = 10)
     private String phone;
+
+    @NotNull(message = "Designation cannot be null")
     @Convert(converter = DesignationConverter.class)
     private Designation designation;
+
+    @PastOrPresent(message = "Onboarding Start Date cannot be in the future")
     @Temporal(TemporalType.DATE)
     private Date onboardingStartDate;
+
+    @FutureOrPresent(message = "Onboarding End Date cannot be in the past")
     @Temporal(TemporalType.DATE)
     private Date onboardingEndDate;
     @ManyToMany
@@ -50,18 +65,8 @@ public class EmployeeEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ref_project", referencedColumnName = "id")
     private ProjectEntity project;
+
+    @NotNull(message = "Status cannot be null")
     @Convert(converter = EmployeeStatusConverter.class)
     private EmployeeStatus status;
-
-    public EmployeeEntity(Integer id, String name, Date dob, String address, String phone, Designation designation, Date onboardingStartDate, Date onboardingEndDate, EmployeeStatus status) {
-        this.id = id;
-        this.name = name;
-        this.dob = dob;
-        this.address = address;
-        this.phone = phone;
-        this.designation = designation;
-        this.onboardingStartDate = onboardingStartDate;
-        this.onboardingEndDate = onboardingEndDate;
-        this.status = status;
-    }
 }

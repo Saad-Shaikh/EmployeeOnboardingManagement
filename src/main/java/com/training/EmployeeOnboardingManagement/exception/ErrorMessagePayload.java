@@ -1,14 +1,14 @@
 package com.training.EmployeeOnboardingManagement.exception;
 
+import com.training.EmployeeOnboardingManagement.enums.ErrorMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.time.ZonedDateTime;
+import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
 @Getter
 public class ErrorMessagePayload {
-    private final ZonedDateTime timestamp;
-    private final String message;
-    private final String details;
+    private final HttpStatus httpStatus;
+    private final ErrorMessage errorMessage;
+    private final String developerMessage;
 }
