@@ -1,5 +1,6 @@
 package com.training.EmployeeOnboardingManagement.dto;
 
+import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,5 +8,5 @@ import lombok.Data;
 @Data
 public class EmployeeStatusPatchDTO {
     private Integer id;
-    private String status;
+    private EmployeeStatus status;
 }
