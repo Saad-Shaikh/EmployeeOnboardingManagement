@@ -1,10 +1,8 @@
 package com.training.EmployeeOnboardingManagement.service.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.training.EmployeeOnboardingManagement.dao.EmployeeRepository;
-import com.training.EmployeeOnboardingManagement.dto.CreateEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.DetailedEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
-import com.training.EmployeeOnboardingManagement.dto.UpdateEmployeeDTO;
+import com.training.EmployeeOnboardingManagement.dto.*;
 import com.training.EmployeeOnboardingManagement.entity.*;
 import com.training.EmployeeOnboardingManagement.enums.ErrorMessage;
 import com.training.EmployeeOnboardingManagement.exception.ErrorMessagePayload;
@@ -28,6 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
     @Autowired
     private EmployeeValidator employeeValidator;
+    private QEmployeeEntity qEmployee = QEmployeeEntity.employeeEntity;
 
     private EmployeeEntity getEmployeeEntityById(Integer id) {
         return employeeRepository.findById(id).orElseThrow(
@@ -38,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<DetailedEmployeeDTO> getAllEmployees() {
         List<EmployeeEntity> employees = employeeRepository.findAll();
-        List<DetailedEmployeeDTO> employeeDTOs = employeeMapper.mapDetailedDTOListToEntityList(employees);
+        List<DetailedEmployeeDTO> employeeDTOs = employeeMapper.mapEntityListToDetailedDTOList(employees);
         return employeeDTOs;
     }
 
@@ -69,5 +68,25 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeMapper.mapStatusPatchDTOToEntity(employeeStatusPatchDTO, employee);
         }
         return employeeMapper.mapEntityToDetailedDTO(employee);
+    }
+
+    public List<DetailedEmployeeDTO> searchEmployeesByFields(EmployeeSearchDTO employeeSearchDTO) {
+        BooleanBuilder builder = constructBooleanBuilderForSearch(employeeSearchDTO);
+        List<EmployeeEntity> employees = (List<EmployeeEntity>) employeeRepository.findAll(builder);
+        return employeeMapper.mapEntityListToDetailedDTOList(employees);
+    }
+
+    private BooleanBuilder constructBooleanBuilderForSearch(EmployeeSearchDTO employeeSearchDTO) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if (employeeSearchDTO.getName() != null && !employeeSearchDTO.getName().isEmpty()) {
+            builder.and(qEmployee.name.containsIgnoreCase(employeeSearchDTO.getName()));
+        }
+        if (employeeSearchDTO.getAddress() != null && !employeeSearchDTO.getAddress().isEmpty()) {
+            builder.and(qEmployee.address.containsIgnoreCase(employeeSearchDTO.getAddress()));
+        }
+        if (employeeSearchDTO.getPhone() != null && !employeeSearchDTO.getPhone().isEmpty()) {
+            builder.and(qEmployee.phone.contains(employeeSearchDTO.getPhone()));
+        }
+        return builder;
     }
 }

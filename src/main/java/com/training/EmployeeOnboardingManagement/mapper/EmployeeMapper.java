@@ -23,7 +23,7 @@ public interface EmployeeMapper {
     @Mapping(target = "project", ignore = true)
     EmployeeEntity mapDetailedDTOToEntity(DetailedEmployeeDTO employeeDTO);
 
-    List<DetailedEmployeeDTO> mapDetailedDTOListToEntityList(List<EmployeeEntity> employees);
+    List<DetailedEmployeeDTO> mapEntityListToDetailedDTOList(List<EmployeeEntity> employees);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "onboardingStartDate", ignore = true)

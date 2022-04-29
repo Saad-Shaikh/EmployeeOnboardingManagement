@@ -1,9 +1,6 @@
 package com.training.EmployeeOnboardingManagement.service;
 
-import com.training.EmployeeOnboardingManagement.dto.CreateEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.DetailedEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
-import com.training.EmployeeOnboardingManagement.dto.UpdateEmployeeDTO;
+import com.training.EmployeeOnboardingManagement.dto.*;
 
 import java.util.List;
 
@@ -13,4 +10,5 @@ public interface EmployeeService {
     DetailedEmployeeDTO getEmployeeById(Integer id);
     DetailedEmployeeDTO updateEmployeeById(Integer id, UpdateEmployeeDTO newEmployee);
     DetailedEmployeeDTO updateEmployeeStatusById(Integer id, EmployeeStatusPatchDTO employeeStatusPatchDTO);
+    List<DetailedEmployeeDTO> searchEmployeesByFields(EmployeeSearchDTO employeeSearchDTO);
 }

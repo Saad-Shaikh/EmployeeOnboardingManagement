@@ -1,9 +1,6 @@
 package com.training.EmployeeOnboardingManagement.controller;
 
-import com.training.EmployeeOnboardingManagement.dto.CreateEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.DetailedEmployeeDTO;
-import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
-import com.training.EmployeeOnboardingManagement.dto.UpdateEmployeeDTO;
+import com.training.EmployeeOnboardingManagement.dto.*;
 import com.training.EmployeeOnboardingManagement.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +36,10 @@ public class EmployeeController {
     @PatchMapping(path = "{id}")
     public DetailedEmployeeDTO updateEmployeeStatusById(@PathVariable("id") Integer id, @RequestBody EmployeeStatusPatchDTO employeeStatusPatchDTO) {
         return employeeService.updateEmployeeStatusById(id, employeeStatusPatchDTO);
+    }
+
+    @GetMapping(path = "search")
+    public List<DetailedEmployeeDTO> searchEmployeesByFields(@RequestBody EmployeeSearchDTO employeeSearchDTO) {
+        return employeeService.searchEmployeesByFields(employeeSearchDTO);
     }
 }
