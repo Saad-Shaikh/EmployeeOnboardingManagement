@@ -1,15 +1,17 @@
 package com.training.EmployeeOnboardingManagement.dto;
 
 import com.training.EmployeeOnboardingManagement.enums.Designation;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
 public class EmployeeUpdateDTO {
     @NotBlank(message = "Name cannot be blank")
     private String name;
@@ -24,5 +26,5 @@ public class EmployeeUpdateDTO {
     private Designation designation;
 
     @FutureOrPresent(message = "Onboarding End Date cannot be in the past")
-    private Date onboardingEndDate;
+    private LocalDate onboardingEndDate;
 }
