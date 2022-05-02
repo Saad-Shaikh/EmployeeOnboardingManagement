@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Data
 public class TeamEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 

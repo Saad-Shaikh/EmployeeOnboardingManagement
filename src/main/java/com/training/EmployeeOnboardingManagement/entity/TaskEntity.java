@@ -18,7 +18,7 @@ import java.util.Set;
 @Data
 public class TaskEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String task;
     @Convert(converter = TaskTypeConverter.class)

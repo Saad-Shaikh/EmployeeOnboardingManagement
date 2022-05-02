@@ -21,7 +21,7 @@ import java.util.Set;
 @Data
 public class EmployeeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank(message = "Name cannot be blank")
@@ -48,20 +48,23 @@ public class EmployeeEntity {
     @FutureOrPresent(message = "Onboarding End Date cannot be in the past")
     @Temporal(TemporalType.DATE)
     private Date onboardingEndDate;
-    @ManyToMany
-    @JoinTable(
-            name = "employee_has_mentors",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "mentor_id")
-    )
-    private Set<EmployeeEntity> mentoredBy = new HashSet<>();
-    @ManyToMany
-    @JoinTable(
-            name = "employee_has_mentors",
-            joinColumns = @JoinColumn(name = "mentor_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    private Set<EmployeeEntity> mentorOf = new HashSet<>();
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "employee_has_mentors",
+//            joinColumns = @JoinColumn(name = "employee_id"),
+//            inverseJoinColumns = @JoinColumn(name = "mentor_id")
+//    )
+//    private Set<EmployeeEntity> mentoredBy = new HashSet<>();
+//
+//    @ManyToMany
+//    @JoinTable(
+//            name = "employee_has_mentors",
+//            joinColumns = @JoinColumn(name = "mentor_id"),
+//            inverseJoinColumns = @JoinColumn(name = "employee_id")
+//    )
+//    private Set<EmployeeEntity> mentorOf = new HashSet<>();
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ref_project", referencedColumnName = "id")
     private ProjectEntity project;

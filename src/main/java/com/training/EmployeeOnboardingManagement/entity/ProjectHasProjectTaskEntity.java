@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 public class ProjectHasProjectTaskEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ref_project", referencedColumnName = "id")
