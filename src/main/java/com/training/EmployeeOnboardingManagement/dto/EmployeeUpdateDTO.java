@@ -8,7 +8,6 @@ import java.util.Date;
 @Data
 public class EmployeeUpdateDTO {
     private String name;
-    private Date dob;
     private String address;
     private String phone;
     private Designation designation;
