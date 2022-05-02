@@ -29,12 +29,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private ConstraintValidator constraintValidator;
     private QEmployeeEntity qEmployee = QEmployeeEntity.employeeEntity;
 
-    private EmployeeEntity getEmployeeEntityById(Integer id) {
-        return employeeRepository.findById(id).orElseThrow(
-                () -> new NotFoundException(new ErrorMessagePayload(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND, "Employee with id " + id + " does not exist!"))
-        );
-    }
-
     @Override
     public List<EmployeeDetailDTO> getAllEmployees() {
         List<EmployeeEntity> employees = employeeRepository.findAll();
@@ -51,14 +45,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO getEmployeeById(Integer id) {
-        EmployeeEntity employee =  getEmployeeEntityById(id);
+        EmployeeEntity employee =  getById(id);
         return employeeMapper.mapEntityToDetailDTO(employee);
     }
 
     @Override
     public EmployeeDetailDTO updateEmployeeById(Integer id, EmployeeUpdateDTO newEmployee) {
         constraintValidator.validateConstraints(newEmployee);
-        EmployeeEntity employee = getEmployeeEntityById(id);
+        EmployeeEntity employee = getById(id);
         employeeMapper.mapUpdateDTOToEntity(newEmployee, employee);
         return employeeMapper.mapEntityToDetailDTO(employee);
     }
@@ -66,15 +60,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDetailDTO updateEmployeeStatusById(Integer id, EmployeeStatusPatchDTO employeeStatusPatchDTO) {
         constraintValidator.validateConstraints(employeeStatusPatchDTO);
-        EmployeeEntity employee = getEmployeeEntityById(id);
+        EmployeeEntity employee = getById(id);
         if (validateEmployeeStatus(employee.getStatus(), employeeStatusPatchDTO.getStatus())) {
             employeeMapper.mapStatusPatchDTOToEntity(employeeStatusPatchDTO, employee);
         }
         return employeeMapper.mapEntityToDetailDTO(employee);
-    }
-
-    private boolean validateEmployeeStatus(EmployeeStatus status, EmployeeStatus newStatus) {
-        return !status.equals(newStatus);
     }
 
     @Override
@@ -82,6 +72,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         BooleanBuilder builder = constructBooleanBuilderForSearch(employeeSearchDTO);
         List<EmployeeEntity> employees = (List<EmployeeEntity>) employeeRepository.findAll(builder);
         return employeeMapper.mapEntityListToDetailDTOList(employees);
+    }
+
+    private EmployeeEntity getById(Integer id) {
+        return employeeRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(new ErrorMessagePayload(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND, "Employee with id " + id + " does not exist!"))
+        );
+    }
+
+    private boolean validateEmployeeStatus(EmployeeStatus status, EmployeeStatus newStatus) {
+        return !status.equals(newStatus);
     }
 
     private BooleanBuilder constructBooleanBuilderForSearch(EmployeeSearchDTO employeeSearchDTO) {
