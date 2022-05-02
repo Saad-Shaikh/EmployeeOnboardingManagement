@@ -1,6 +1,5 @@
 package com.training.EmployeeOnboardingManagement.validator;
 
-import com.training.EmployeeOnboardingManagement.entity.EmployeeEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +10,11 @@ import java.util.Set;
 
 @Component
 @AllArgsConstructor
-public class EmployeeValidator {
+public class ConstraintValidator {
     private Validator validator;
 
-    public void validateEmployee(EmployeeEntity employee) {
-        Set<ConstraintViolation<EmployeeEntity>> violations = validator.validate(employee);
+    public <T> void validateConstraints(T object) {
+        Set<ConstraintViolation<T>> violations = validator.validate(object);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }

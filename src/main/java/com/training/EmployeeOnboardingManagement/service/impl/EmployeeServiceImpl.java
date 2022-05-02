@@ -4,12 +4,13 @@ import com.querydsl.core.BooleanBuilder;
 import com.training.EmployeeOnboardingManagement.dao.EmployeeRepository;
 import com.training.EmployeeOnboardingManagement.dto.*;
 import com.training.EmployeeOnboardingManagement.entity.*;
+import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import com.training.EmployeeOnboardingManagement.enums.ErrorMessage;
 import com.training.EmployeeOnboardingManagement.exception.ErrorMessagePayload;
 import com.training.EmployeeOnboardingManagement.exception.NotFoundException;
 import com.training.EmployeeOnboardingManagement.mapper.EmployeeMapper;
 import com.training.EmployeeOnboardingManagement.service.EmployeeService;
-import com.training.EmployeeOnboardingManagement.validator.EmployeeValidator;
+import com.training.EmployeeOnboardingManagement.validator.ConstraintValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeMapper employeeMapper;
     @Autowired
-    private EmployeeValidator employeeValidator;
+    private ConstraintValidator constraintValidator;
     private QEmployeeEntity qEmployee = QEmployeeEntity.employeeEntity;
 
     private EmployeeEntity getEmployeeEntityById(Integer id) {
@@ -43,8 +44,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO createEmployee(EmployeeCreateDTO employee) {
+        constraintValidator.validateConstraints(employee);
         EmployeeEntity employeeEntity = employeeMapper.mapCreateDTOToEntity(employee);
-        employeeValidator.validateEmployee(employeeEntity);
         return employeeMapper.mapEntityToDetailDTO(employeeRepository.save(employeeEntity));
     }
 
@@ -56,6 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO updateEmployeeById(Integer id, EmployeeUpdateDTO newEmployee) {
+        constraintValidator.validateConstraints(newEmployee);
         EmployeeEntity employee = getEmployeeEntityById(id);
         employeeMapper.mapUpdateDTOToEntity(newEmployee, employee);
         return employeeMapper.mapEntityToDetailDTO(employee);
@@ -63,13 +65,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO updateEmployeeStatusById(Integer id, EmployeeStatusPatchDTO employeeStatusPatchDTO) {
+        constraintValidator.validateConstraints(employeeStatusPatchDTO);
         EmployeeEntity employee = getEmployeeEntityById(id);
-        if (!employee.getStatus().equals(employeeStatusPatchDTO.getStatus())) {
+        if (validateEmployeeStatus(employee.getStatus(), employeeStatusPatchDTO.getStatus())) {
             employeeMapper.mapStatusPatchDTOToEntity(employeeStatusPatchDTO, employee);
         }
         return employeeMapper.mapEntityToDetailDTO(employee);
     }
 
+    private boolean validateEmployeeStatus(EmployeeStatus status, EmployeeStatus newStatus) {
+        return !status.equals(newStatus);
+    }
+
+    @Override
     public List<EmployeeDetailDTO> searchEmployeesByFields(EmployeeSearchDTO employeeSearchDTO) {
         BooleanBuilder builder = constructBooleanBuilderForSearch(employeeSearchDTO);
         List<EmployeeEntity> employees = (List<EmployeeEntity>) employeeRepository.findAll(builder);
