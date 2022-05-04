@@ -19,16 +19,21 @@ import java.util.Set;
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "task")
     private String task;
+
     @Convert(converter = TaskTypeConverter.class)
+    @Column(name = "task_type")
     private TaskType taskType;
+
     @JsonIgnore
     @OneToMany(mappedBy = "task")
     private Set<ProjectHasProjectTaskEntity> taskIsAssignedToProjectsSet = new HashSet<>();
 
-    public TaskEntity(String task, TaskType taskType) {
-        this.task = task;
-        this.taskType = taskType;
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "task")
+    private Set<EmployeeHasOnboardingTaskEntity> taskIsAssignedToEmployeeSet = new HashSet<>();
 }
