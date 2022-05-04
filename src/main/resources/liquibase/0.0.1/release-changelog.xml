@@ -6,4 +6,10 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <include file="liquibase/0.0.1/project/01_create_table.xml"/>
     <include file="liquibase/0.0.1/employee/01_create_table.xml"/>
+    <include file="liquibase/0.0.1/team/01_create_table.xml"/>
+    <include file="liquibase/0.0.1/task/01_create_table.xml"/>
+    <include file="liquibase/0.0.1/employee_has_mentors/01_create_table.xml"/>
+    <include file="liquibase/0.0.1/employee_has_onboarding_task/01_create_table.xml"/>
+    <include file="liquibase/0.0.1/project_has_project_task/01_create_table.xml"/>
+    <include file="liquibase/0.0.1/team_has_employees/01_create_table.xml"/>
 </databaseChangeLog>

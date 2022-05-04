@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="1" author="nit169">
+        <createTable tableName="project_has_project_task">
+            <column name="id" type="int" autoIncrement="true" incrementBy="1" generationType="ALWAYS">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ref_project" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ref_task" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remarks" type="varchar(255)">
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="date">
+            </column>
+            <column name="links" type="varchar(255)">
+            </column>
+            <column name="status" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="project_has_project_task" baseColumnNames="ref_project"
+                                 constraintName="fk_projectHasPrTask_employee" referencedTableName="project"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="project_has_project_task" baseColumnNames="ref_task"
+                                 constraintName="fk_projectHasPrTask_task" referencedTableName="task"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

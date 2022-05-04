@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="1" author="nit169">
+        <createTable tableName="employee_has_mentors">
+            <column name="employee_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mentor_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="employee_has_mentors" baseColumnNames="employee_id"
+                                 constraintName="fk_employeeHasMentors_employee" referencedTableName="employee"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="employee_has_mentors" baseColumnNames="mentor_id"
+                                 constraintName="fk_employeeHasMentors_mentor" referencedTableName="employee"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
