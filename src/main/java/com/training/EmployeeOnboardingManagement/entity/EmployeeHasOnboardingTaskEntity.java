@@ -10,21 +10,21 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "project_has_project_task")
-@NoArgsConstructor
+@Table(name = "employee_has_onboarding_task")
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class ProjectHasProjectTaskEntity {
+public class EmployeeHasOnboardingTaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ref_project", referencedColumnName = "id")
-    private ProjectEntity project;
+    @ManyToOne()
+    @JoinColumn(name = "ref_employee", referencedColumnName = "id")
+    private EmployeeEntity employee;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "ref_task", referencedColumnName = "id")
     private TaskEntity task;
 
@@ -44,8 +44,8 @@ public class ProjectHasProjectTaskEntity {
     @Column(name = "status")
     private TaskStatus status;
 
-    public ProjectHasProjectTaskEntity(ProjectEntity project, TaskEntity task, String remarks, LocalDate startDate, LocalDate endDate, String links, TaskStatus status) {
-        this.project = project;
+    public EmployeeHasOnboardingTaskEntity(EmployeeEntity employee, TaskEntity task, String remarks, LocalDate startDate, LocalDate endDate, String links, TaskStatus status) {
+        this.employee = employee;
         this.task = task;
         this.remarks = remarks;
         this.startDate = startDate;

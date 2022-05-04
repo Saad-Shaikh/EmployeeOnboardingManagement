@@ -1,6 +1,5 @@
 package com.training.EmployeeOnboardingManagement.dto;
 
-import com.training.EmployeeOnboardingManagement.entity.TaskEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,5 +12,5 @@ public class ProjectAndProjectTasksDTO {
     private String name;
     private String description;
     private String repoUrl;
-    private List<TaskEntity> projectTasks;
+    private List<ProjectTaskDetailDTO> projectTasks;
 }

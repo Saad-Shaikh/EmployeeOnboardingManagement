@@ -12,7 +12,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
     TaskDetailDTO mapEntityToDetailDTO(TaskEntity task);
-    List<TaskDetailDTO> mapEntityListToDetailDTOList(List<TaskEntity> taskEntityList);
+    List<TaskDetailDTO> mapEntityListToDetailDTOList(List<TaskEntity> taskList);
+    List<TaskEntity> mapDetailDTOListToEntityList(List<TaskDetailDTO> taskDetailDTOList);
     TaskEntity mapCreateDTOToEntity(TaskCreateDTO taskCreateDTO);
     TaskEntity mapUpdateDTOToEntity(TaskUpdateDTO taskUpdateDTO, @MappingTarget TaskEntity task);
 }

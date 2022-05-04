@@ -1,13 +1,10 @@
 package com.training.EmployeeOnboardingManagement.service;
 
-import com.training.EmployeeOnboardingManagement.entity.ProjectEntity;
-import com.training.EmployeeOnboardingManagement.entity.TaskEntity;
-
-import java.util.List;
+import com.training.EmployeeOnboardingManagement.dto.*;
 
 public interface ProjectService {
-//    ProjectEntity getEmployeeProject(Integer id);
-//    ProjectEntity addEmployeeProject(Integer id, ProjectEntity project);
-//    ProjectEntity updateEmployeeProject(Integer id, ProjectEntity newProject);
-    List<TaskEntity> getTasksForProject(Integer id);
+    ProjectAndProjectTasksDTO getEmployeeProjectAndTasks(Integer id);
+    ProjectAndProjectTasksDTO addProjectForEmployee(Integer id, ProjectCreateDTO projectCreateDTO);
+    ProjectAndProjectTasksDTO updateProjectForEmployee(Integer id, ProjectUpdateDTO projectUpdateDTO);
+    ProjectAndProjectTasksDTO updateEmployeeProjectTask(Integer id, Integer projectTaskId, ProjectTaskUpdateDTO projectTaskUpdateDTO);
 }

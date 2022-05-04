@@ -17,17 +17,23 @@ import java.util.Set;
 public class ProjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "repo_url")
     private String repoUrl;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "project")
+    private EmployeeEntity employee;
+
     @JsonIgnore
     @OneToMany(mappedBy = "project")
     private Set<ProjectHasProjectTaskEntity> projectHasProjectTaskSet = new HashSet<>();
-
-    public ProjectEntity(String name, String description, String repoUrl) {
-        this.name = name;
-        this.description = description;
-        this.repoUrl = repoUrl;
-    }
 }

@@ -1,5 +1,6 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.training.EmployeeOnboardingManagement.converter.DesignationConverter;
 import com.training.EmployeeOnboardingManagement.converter.EmployeeStatusConverter;
 import com.training.EmployeeOnboardingManagement.enums.Designation;
@@ -46,28 +47,35 @@ public class EmployeeEntity {
     @Column(name = "onboarding_end_date")
     private LocalDate onboardingEndDate;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "employee_has_mentors",
-//            joinColumns = @JoinColumn(name = "employee_id"),
-//            inverseJoinColumns = @JoinColumn(name = "mentor_id")
-//    )
-//    private Set<EmployeeEntity> mentoredBy = new HashSet<>();
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "employee_has_mentors",
-//            joinColumns = @JoinColumn(name = "mentor_id"),
-//            inverseJoinColumns = @JoinColumn(name = "employee_id")
-//    )
-//    private Set<EmployeeEntity> mentorOf = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "employee_has_mentors",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "mentor_id")
+    )
+    private Set<EmployeeEntity> mentoredBy = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_has_mentors",
+            joinColumns = @JoinColumn(name = "mentor_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
+    private Set<EmployeeEntity> mentorOf = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ref_project", referencedColumnName = "id")
-//    @Column(name = "ref_project")
     private ProjectEntity project;
 
     @Convert(converter = EmployeeStatusConverter.class)
     @Column(name = "status")
     private EmployeeStatus status;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee")
+    private Set<TeamHasEmployeesEntity> employeePartOfTeamsSet = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeHasOnboardingTaskEntity> employeeHasOnboardingTasksSet = new HashSet<>();
 }

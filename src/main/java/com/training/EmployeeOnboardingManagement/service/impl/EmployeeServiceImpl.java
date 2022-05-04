@@ -74,14 +74,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.mapEntityListToDetailDTOList(employees);
     }
 
-    private EmployeeEntity getById(Integer id) {
+    @Override
+    public boolean validateEmployeeStatus(EmployeeStatus status, EmployeeStatus newStatus) {
+        return !status.equals(newStatus);
+    }
+
+    @Override
+    public EmployeeEntity addProjectForEmployee(Integer id, ProjectEntity project) {
+        EmployeeEntity employee = getById(id);
+        employee.setProject(project);
+        return employee;
+    }
+
+    @Override
+    public EmployeeEntity getById(Integer id) {
         return employeeRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(new ErrorMessagePayload(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND, "Employee with id " + id + " does not exist!"))
         );
-    }
-
-    private boolean validateEmployeeStatus(EmployeeStatus status, EmployeeStatus newStatus) {
-        return !status.equals(newStatus);
     }
 
     private BooleanBuilder constructBooleanBuilderForSearch(EmployeeSearchDTO employeeSearchDTO) {

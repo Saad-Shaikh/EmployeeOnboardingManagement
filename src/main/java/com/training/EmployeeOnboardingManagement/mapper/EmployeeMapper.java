@@ -5,6 +5,7 @@ import com.training.EmployeeOnboardingManagement.dto.EmployeeDetailDTO;
 import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
 import com.training.EmployeeOnboardingManagement.dto.EmployeeUpdateDTO;
 import com.training.EmployeeOnboardingManagement.entity.EmployeeEntity;
+import com.training.EmployeeOnboardingManagement.entity.ProjectEntity;
 import org.mapstruct.*;
 
 import java.util.List;
