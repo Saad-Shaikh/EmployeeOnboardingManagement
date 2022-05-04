@@ -18,7 +18,6 @@
             <column name="remarks" type="varchar(255)">
             </column>
             <column name="start_date" type="date">
-                <constraints nullable="false"/>
             </column>
             <column name="end_date" type="date">
             </column>
