@@ -11,6 +11,7 @@ import com.training.EmployeeOnboardingManagement.exception.ErrorMessagePayload;
 import com.training.EmployeeOnboardingManagement.exception.NotFoundException;
 import com.training.EmployeeOnboardingManagement.mapper.TaskMapper;
 import com.training.EmployeeOnboardingManagement.service.TaskService;
+import com.training.EmployeeOnboardingManagement.validator.TaskValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskMapper taskMapper;
 
+    @Autowired
+    private TaskValidator taskValidator;
+
     @Override
     public List<TaskEntity> findByTaskType(TaskType taskType) {
         return taskRepository.findByTaskType(taskType);
@@ -39,12 +43,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDetailDTO createTask(TaskCreateDTO taskCreateDTO) {
+        taskValidator.validate(taskCreateDTO);
         TaskEntity task = taskMapper.mapCreateDTOToEntity(taskCreateDTO);
         return taskMapper.mapEntityToDetailDTO(taskRepository.save(task));
     }
 
     @Override
     public TaskDetailDTO updateTask(Integer id, TaskUpdateDTO taskUpdateDTO) {
+        taskValidator.validate(taskUpdateDTO);
         TaskEntity task = getById(id);
         taskMapper.mapUpdateDTOToEntity(taskUpdateDTO, task);
         return taskMapper.mapEntityToDetailDTO(task);

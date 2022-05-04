@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "api/employees/{id}/project")
 @AllArgsConstructor
@@ -19,17 +21,17 @@ public class ProjectController {
     }
 
     @PostMapping()
-    public ProjectAndProjectTasksDTO addProjectForEmployee(@PathVariable("id") Integer id, @RequestBody ProjectCreateDTO projectCreateDTO) {
+    public ProjectAndProjectTasksDTO addProjectForEmployee(@PathVariable("id") Integer id, @RequestBody @Valid ProjectCreateDTO projectCreateDTO) {
         return projectService.addProjectForEmployee(id, projectCreateDTO);
     }
 
     @PutMapping()
-    public ProjectAndProjectTasksDTO updateEmployeeProject(@PathVariable("id") Integer id, @RequestBody ProjectUpdateDTO projectUpdateDTO) {
+    public ProjectAndProjectTasksDTO updateEmployeeProject(@PathVariable("id") Integer id, @RequestBody @Valid ProjectUpdateDTO projectUpdateDTO) {
         return projectService.updateProjectForEmployee(id, projectUpdateDTO);
     }
 
     @PutMapping(path = "{projectTaskId}")
-    public ProjectAndProjectTasksDTO updateEmployeeProjectTask(@PathVariable("id") Integer id, @PathVariable("projectTaskId") Integer projectTaskId, @RequestBody ProjectTaskUpdateDTO projectTaskUpdateDTO) {
+    public ProjectAndProjectTasksDTO updateEmployeeProjectTask(@PathVariable("id") Integer id, @PathVariable("projectTaskId") Integer projectTaskId, @RequestBody @Valid ProjectTaskUpdateDTO projectTaskUpdateDTO) {
         return projectService.updateEmployeeProjectTask(id, projectTaskId, projectTaskUpdateDTO);
     }
 }

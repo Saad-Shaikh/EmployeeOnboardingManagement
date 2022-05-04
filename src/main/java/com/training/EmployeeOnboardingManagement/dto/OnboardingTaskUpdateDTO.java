@@ -4,23 +4,24 @@ import com.training.EmployeeOnboardingManagement.enums.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 public class OnboardingTaskUpdateDTO {
+    @NotNull()
     private String remarks;
 
-    @FutureOrPresent(message = "Start date cannot be in the past")
+    @NotNull()
     private LocalDate startDate;
 
-    @FutureOrPresent(message = "End date cannot be in the past")
+    @NotNull()
     private LocalDate endDate;
 
+    @NotNull()
     private String links;
 
-    @NotNull(message = "Task status cannot be null")
+    @NotNull()
     private TaskStatus status;
 }

@@ -5,9 +5,9 @@ import com.training.EmployeeOnboardingManagement.dto.TaskDetailDTO;
 import com.training.EmployeeOnboardingManagement.dto.TaskUpdateDTO;
 import com.training.EmployeeOnboardingManagement.service.TaskService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,12 +22,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDetailDTO createTask(@RequestBody TaskCreateDTO taskCreateDTO) {
+    public TaskDetailDTO createTask(@RequestBody @Valid TaskCreateDTO taskCreateDTO) {
         return taskService.createTask(taskCreateDTO);
     }
 
     @PutMapping(path = "{id}")
-    public TaskDetailDTO updateTask(@PathVariable("id") Integer id, @RequestBody TaskUpdateDTO taskUpdateDTO) {
+    public TaskDetailDTO updateTask(@PathVariable("id") Integer id, @RequestBody @Valid TaskUpdateDTO taskUpdateDTO) {
         return taskService.updateTask(id, taskUpdateDTO);
     }
 

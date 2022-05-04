@@ -5,6 +5,7 @@ import com.training.EmployeeOnboardingManagement.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public EmployeeDetailDTO createEmployee(@RequestBody EmployeeCreateDTO employeeDTO) {
+    public EmployeeDetailDTO createEmployee(@RequestBody @Valid EmployeeCreateDTO employeeDTO) {
         return employeeService.createEmployee(employeeDTO);
     }
 
@@ -29,17 +30,17 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "{id}")
-    public EmployeeDetailDTO updateEmployeeById(@PathVariable("id") Integer id, @RequestBody EmployeeUpdateDTO employeeDTO) {
+    public EmployeeDetailDTO updateEmployeeById(@PathVariable("id") Integer id, @RequestBody @Valid EmployeeUpdateDTO employeeDTO) {
         return employeeService.updateEmployeeById(id, employeeDTO);
     }
 
     @PatchMapping(path = "{id}")
-    public EmployeeDetailDTO updateEmployeeStatusById(@PathVariable("id") Integer id, @RequestBody EmployeeStatusPatchDTO employeeStatusPatchDTO) {
+    public EmployeeDetailDTO updateEmployeeStatusById(@PathVariable("id") Integer id, @RequestBody @Valid EmployeeStatusPatchDTO employeeStatusPatchDTO) {
         return employeeService.updateEmployeeStatusById(id, employeeStatusPatchDTO);
     }
 
     @GetMapping(path = "search")
-    public List<EmployeeDetailDTO> searchEmployeesByFields(@RequestBody EmployeeSearchDTO employeeSearchDTO) {
+    public List<EmployeeDetailDTO> searchEmployeesByFields(@RequestBody @Valid EmployeeSearchDTO employeeSearchDTO) {
         return employeeService.searchEmployeesByFields(employeeSearchDTO);
     }
 }

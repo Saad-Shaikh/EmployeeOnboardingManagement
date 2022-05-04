@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Data
 public class EmployeeStatusPatchDTO {
-    @NotNull(message = "ID cannot be null")
+    @NotNull()
     private Integer id;
 
-    @NotNull(message = "Status cannot be null")
+    @NotNull()
     private EmployeeStatus status;
 }

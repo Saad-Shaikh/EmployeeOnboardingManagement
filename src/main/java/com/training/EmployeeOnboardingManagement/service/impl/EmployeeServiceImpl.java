@@ -10,7 +10,7 @@ import com.training.EmployeeOnboardingManagement.exception.ErrorMessagePayload;
 import com.training.EmployeeOnboardingManagement.exception.NotFoundException;
 import com.training.EmployeeOnboardingManagement.mapper.EmployeeMapper;
 import com.training.EmployeeOnboardingManagement.service.EmployeeService;
-import com.training.EmployeeOnboardingManagement.validator.ConstraintValidator;
+import com.training.EmployeeOnboardingManagement.validator.EmployeeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeMapper employeeMapper;
     @Autowired
-    private ConstraintValidator constraintValidator;
+    private EmployeeValidator employeeValidator;
     private QEmployeeEntity qEmployee = QEmployeeEntity.employeeEntity;
 
     @Override
@@ -38,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO createEmployee(EmployeeCreateDTO employee) {
-        constraintValidator.validateConstraints(employee);
+        employeeValidator.validate(employee);
         EmployeeEntity employeeEntity = employeeMapper.mapCreateDTOToEntity(employee);
         return employeeMapper.mapEntityToDetailDTO(employeeRepository.save(employeeEntity));
     }
@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO updateEmployeeById(Integer id, EmployeeUpdateDTO newEmployee) {
-        constraintValidator.validateConstraints(newEmployee);
+        employeeValidator.validate(newEmployee);
         EmployeeEntity employee = getById(id);
         employeeMapper.mapUpdateDTOToEntity(newEmployee, employee);
         return employeeMapper.mapEntityToDetailDTO(employee);
@@ -59,7 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO updateEmployeeStatusById(Integer id, EmployeeStatusPatchDTO employeeStatusPatchDTO) {
-        constraintValidator.validateConstraints(employeeStatusPatchDTO);
         EmployeeEntity employee = getById(id);
         if (validateEmployeeStatus(employee.getStatus(), employeeStatusPatchDTO.getStatus())) {
             employeeMapper.mapStatusPatchDTOToEntity(employeeStatusPatchDTO, employee);

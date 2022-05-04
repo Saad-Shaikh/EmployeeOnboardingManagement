@@ -15,6 +15,7 @@ import com.training.EmployeeOnboardingManagement.mapper.EmployeeHasOnboardingTas
 import com.training.EmployeeOnboardingManagement.mapper.TaskMapper;
 import com.training.EmployeeOnboardingManagement.service.EmployeeHasOnboardingTaskService;
 import com.training.EmployeeOnboardingManagement.service.EmployeeService;
+import com.training.EmployeeOnboardingManagement.validator.OnboardingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,9 @@ public class EmployeeHasOnboardingTaskServiceImpl implements EmployeeHasOnboardi
     @Autowired
     private TaskMapper taskMapper;
 
+    @Autowired
+    private OnboardingValidator onboardingValidator;
+
     @Override
     public List<OnboardingTaskDetailDTO> getEmployeeOnboardingTasks(Integer id) {
         return employeeHasOnboardingTaskMapper.mapEntityListToDetailDTOList(employeeHasOnboardingTaskRepository.findByEmployeeId(id));
@@ -45,6 +49,7 @@ public class EmployeeHasOnboardingTaskServiceImpl implements EmployeeHasOnboardi
 
     @Override
     public List<OnboardingTaskDetailDTO> addEmployeeOnboardingTasks(Integer id, OnboardingTaskAssignDTO onboardingTaskAssignDTO) {
+        onboardingValidator.validate(onboardingTaskAssignDTO);
         EmployeeEntity employee = employeeService.getById(id);
         List<TaskEntity> onboardingTasks = taskMapper.mapDetailDTOListToEntityList(onboardingTaskAssignDTO.getTaskList());
         List<EmployeeHasOnboardingTaskEntity> employeeHasOnboardingTaskList = new ArrayList<>();
@@ -59,6 +64,7 @@ public class EmployeeHasOnboardingTaskServiceImpl implements EmployeeHasOnboardi
 
     @Override
     public List<OnboardingTaskDetailDTO> updateEmployeeOnboardingTask(Integer id, Integer onboardingTaskId, OnboardingTaskUpdateDTO onboardingTaskUpdateDTO) {
+        onboardingValidator.validate(onboardingTaskUpdateDTO);
         EmployeeHasOnboardingTaskEntity onboardingTask = getById(onboardingTaskId);
         employeeHasOnboardingTaskMapper.mapUpdateDTOToEntity(onboardingTaskUpdateDTO, onboardingTask);
         return getEmployeeOnboardingTasks(id);

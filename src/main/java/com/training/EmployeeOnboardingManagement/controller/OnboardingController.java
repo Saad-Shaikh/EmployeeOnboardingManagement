@@ -7,6 +7,7 @@ import com.training.EmployeeOnboardingManagement.service.EmployeeHasOnboardingTa
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,12 +21,12 @@ public class OnboardingController {
         return employeeHasOnboardingTaskService.getEmployeeOnboardingTasks(id);
     }
 
-    @PostMapping List<OnboardingTaskDetailDTO> addEmployeeOnboardingTasks(@PathVariable("id") Integer id, @RequestBody OnboardingTaskAssignDTO onboardingTaskAssignDTO) {
+    @PostMapping List<OnboardingTaskDetailDTO> addEmployeeOnboardingTasks(@PathVariable("id") Integer id, @RequestBody @Valid OnboardingTaskAssignDTO onboardingTaskAssignDTO) {
         return employeeHasOnboardingTaskService.addEmployeeOnboardingTasks(id, onboardingTaskAssignDTO);
     }
 
     @PutMapping(path = "{onboardingTaskId}")
-    public List<OnboardingTaskDetailDTO> updateEmployeeOnboardingTask(@PathVariable("id") Integer id, @PathVariable("onboardingTaskId") Integer onboardingTaskId, @RequestBody OnboardingTaskUpdateDTO onboardingTaskUpdateDTO) {
+    public List<OnboardingTaskDetailDTO> updateEmployeeOnboardingTask(@PathVariable("id") Integer id, @PathVariable("onboardingTaskId") Integer onboardingTaskId, @RequestBody @Valid OnboardingTaskUpdateDTO onboardingTaskUpdateDTO) {
         return employeeHasOnboardingTaskService.updateEmployeeOnboardingTask(id, onboardingTaskId, onboardingTaskUpdateDTO);
     }
 

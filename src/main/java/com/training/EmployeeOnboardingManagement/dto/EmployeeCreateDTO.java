@@ -4,35 +4,34 @@ import com.training.EmployeeOnboardingManagement.enums.Designation;
 import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 public class EmployeeCreateDTO {
-    @NotBlank(message = "Name cannot be blank")
+    @NotNull()
     private String name;
 
-    @PastOrPresent(message = "Date of birth cannot be in the future")
+    @NotNull()
     private LocalDate dob;
 
-    @Size(min = 10, max = 100)
+    @NotNull()
     private String address;
 
-    @Size(min = 10, max = 10)
+    @NotNull()
     private String phone;
 
-    @NotNull(message = "Designation cannot be null")
+    @NotNull()
     private Designation designation;
 
-    @PastOrPresent(message = "Onboarding Start Date cannot be in the future")
+    @NotNull()
     private LocalDate onboardingStartDate;
 
-    @FutureOrPresent(message = "Onboarding End Date cannot be in the past")
+    @NotNull()
     private LocalDate onboardingEndDate;
 
-    @NotNull(message = "Status cannot be null")
+    @NotNull()
     private EmployeeStatus status;
 }
