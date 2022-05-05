@@ -54,7 +54,8 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.mapEntityToNameDTO(team);
     }
 
-    private TeamEntity getById(Integer id) {
+    @Override
+    public TeamEntity getById(Integer id) {
         return teamRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(new ErrorMessagePayload(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND, "Team with id " + id + " does not exist"))
         );

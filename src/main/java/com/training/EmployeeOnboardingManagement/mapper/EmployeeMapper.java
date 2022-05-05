@@ -1,12 +1,10 @@
 package com.training.EmployeeOnboardingManagement.mapper;
 
-import com.training.EmployeeOnboardingManagement.dto.EmployeeCreateDTO;
-import com.training.EmployeeOnboardingManagement.dto.EmployeeDetailDTO;
-import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
-import com.training.EmployeeOnboardingManagement.dto.EmployeeUpdateDTO;
+import com.training.EmployeeOnboardingManagement.dto.*;
 import com.training.EmployeeOnboardingManagement.entity.EmployeeEntity;
-import com.training.EmployeeOnboardingManagement.entity.ProjectEntity;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -46,4 +44,6 @@ public interface EmployeeMapper {
     @Mapping(target = "mentorOf", ignore = true)
     @Mapping(target = "project", ignore = true)
     void mapStatusPatchDTOToEntity(EmployeeStatusPatchDTO employeeDTO, @MappingTarget EmployeeEntity employee);
+
+    EmployeeListDTO mapEntityToListDTO(EmployeeEntity employee);
 }
