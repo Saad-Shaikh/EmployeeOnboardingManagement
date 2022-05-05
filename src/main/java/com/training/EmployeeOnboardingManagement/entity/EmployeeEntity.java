@@ -8,6 +8,7 @@ import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -61,10 +62,12 @@ public class EmployeeEntity {
             joinColumns = @JoinColumn(name = "mentor_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
+    @ToString.Exclude
     private Set<EmployeeEntity> mentorOf = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ref_project", referencedColumnName = "id")
+    @ToString.Exclude
     private ProjectEntity project;
 
     @Convert(converter = EmployeeStatusConverter.class)
@@ -73,9 +76,11 @@ public class EmployeeEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "employee")
+    @ToString.Exclude
     private Set<TeamHasEmployeesEntity> employeePartOfTeamsSet = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "employee")
+    @ToString.Exclude
     private Set<EmployeeHasOnboardingTaskEntity> employeeHasOnboardingTasksSet = new HashSet<>();
 }

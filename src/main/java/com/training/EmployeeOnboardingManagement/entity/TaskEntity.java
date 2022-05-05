@@ -6,6 +6,7 @@ import com.training.EmployeeOnboardingManagement.enums.TaskType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,9 +32,11 @@ public class TaskEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "task")
+    @ToString.Exclude
     private Set<ProjectHasProjectTaskEntity> taskIsAssignedToProjectsSet = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "task")
+    @ToString.Exclude
     private Set<EmployeeHasOnboardingTaskEntity> taskIsAssignedToEmployeeSet = new HashSet<>();
 }

@@ -34,8 +34,8 @@ public class EmployeeValidator extends GenericValidator {
         if (employee.getOnboardingStartDate().isAfter(LocalDate.now())) {
             violations.put("onboardingStartDate", "Onboarding Start Date cannot be in the future");
         }
-        if (employee.getOnboardingEndDate().isAfter(LocalDate.now())) {
-            violations.put("onboardingStartDate", "Onboarding End Date cannot be in the future");
+        if (employee.getOnboardingEndDate().isBefore(LocalDate.now())) {
+            violations.put("onboardingStartDate", "Onboarding End Date cannot be in the past");
         }
 
         throwBadRequestIfViolationsExist(violations);
@@ -54,8 +54,8 @@ public class EmployeeValidator extends GenericValidator {
         if (employee.getPhone().length() != 10 || employee.getPhone().startsWith("0") || !Pattern.matches(phoneRegex, employee.getPhone())) {
             violations.put("phone", "Phone should be a valid 10 digit number");
         }
-        if (employee.getOnboardingEndDate().isAfter(LocalDate.now())) {
-            violations.put("onboardingStartDate", "Onboarding End Date cannot be in the future");
+        if (employee.getOnboardingEndDate().isBefore(LocalDate.now())) {
+            violations.put("onboardingStartDate", "Onboarding End Date cannot be in the past");
         }
 
         throwBadRequestIfViolationsExist(violations);

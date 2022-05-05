@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,9 +32,11 @@ public class ProjectEntity {
 
     @JsonIgnore
     @OneToOne(mappedBy = "project")
+    @ToString.Exclude
     private EmployeeEntity employee;
 
     @JsonIgnore
     @OneToMany(mappedBy = "project")
+    @ToString.Exclude
     private Set<ProjectHasProjectTaskEntity> projectHasProjectTaskSet = new HashSet<>();
 }

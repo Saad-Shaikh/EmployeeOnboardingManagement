@@ -1,9 +1,7 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,5 +23,7 @@ public class TeamEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "team")
+    @ToString.Exclude
     private Set<TeamHasEmployeesEntity> teamHasEmployeesSet = new HashSet<>();
+
 }
