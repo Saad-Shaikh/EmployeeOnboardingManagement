@@ -3,12 +3,16 @@ package com.training.EmployeeOnboardingManagement.service.impl;
 import com.querydsl.core.BooleanBuilder;
 import com.training.EmployeeOnboardingManagement.dao.EmployeeRepository;
 import com.training.EmployeeOnboardingManagement.dto.*;
-import com.training.EmployeeOnboardingManagement.entity.*;
+import com.training.EmployeeOnboardingManagement.entity.EmployeeEntity;
+import com.training.EmployeeOnboardingManagement.entity.EmployeeHasMentorsEntity;
+import com.training.EmployeeOnboardingManagement.entity.ProjectEntity;
+import com.training.EmployeeOnboardingManagement.entity.QEmployeeEntity;
 import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import com.training.EmployeeOnboardingManagement.enums.ErrorMessage;
 import com.training.EmployeeOnboardingManagement.exception.ErrorMessagePayload;
 import com.training.EmployeeOnboardingManagement.exception.NotFoundException;
 import com.training.EmployeeOnboardingManagement.mapper.EmployeeMapper;
+import com.training.EmployeeOnboardingManagement.service.EmployeeMentorsService;
 import com.training.EmployeeOnboardingManagement.service.EmployeeService;
 import com.training.EmployeeOnboardingManagement.validator.EmployeeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,12 +33,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
     @Autowired
     private EmployeeValidator employeeValidator;
-    private QEmployeeEntity qEmployee = QEmployeeEntity.employeeEntity;
+    @Autowired
+    private EmployeeMentorsService employeeMentorsService;
 
     @Override
-    public List<EmployeeDetailDTO> getAllEmployees() {
+    public List<EmployeeListDTO> getAllEmployees() {
         List<EmployeeEntity> employees = employeeRepository.findAll();
-        List<EmployeeDetailDTO> employeeDTOs = employeeMapper.mapEntityListToDetailDTOList(employees);
+        List<EmployeeListDTO> employeeDTOs = employeeMapper.mapEntityListToListDTOList(employees);
         return employeeDTOs;
     }
 
@@ -40,13 +47,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDetailDTO createEmployee(EmployeeCreateDTO employee) {
         employeeValidator.validate(employee);
         EmployeeEntity employeeEntity = employeeMapper.mapCreateDTOToEntity(employee);
-        return employeeMapper.mapEntityToDetailDTO(employeeRepository.save(employeeEntity));
+        employee.getMentoredBy().forEach(mentor -> employeeEntity.getMentoredBy().add(getById(mentor.getId())));
+        employeeRepository.save(employeeEntity);
+        return getEmployeeById(employeeEntity.getId());
     }
 
     @Override
     public EmployeeDetailDTO getEmployeeById(Integer id) {
-        EmployeeEntity employee =  getById(id);
-        return employeeMapper.mapEntityToDetailDTO(employee);
+        EmployeeEntity employee = getById(id);
+        EmployeeDetailDTO employeeDetailDTO =  employeeMapper.mapEntityToDetailDTO(employee);
+        employeeDetailDTO.setMentors(getEmployeeMentors(id));
+        return employeeDetailDTO;
     }
 
     @Override
@@ -92,8 +103,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         );
     }
 
+    private Set<EmployeeListDTO> getEmployeeMentors(Integer id) {
+        List<EmployeeHasMentorsEntity> employeeHasMentors = employeeMentorsService.findAllByEmployeeId(id);
+        Set<EmployeeListDTO> mentors = employeeHasMentors.stream().map((employeeHasMentor) -> {
+            return employeeMapper.mapEntityToListDTO(getById(employeeHasMentor.getMentorId()));
+        }).collect(Collectors.toSet());
+        return mentors;
+    }
+
     private BooleanBuilder constructBooleanBuilderForSearch(EmployeeSearchDTO employeeSearchDTO) {
         BooleanBuilder builder = new BooleanBuilder();
+        QEmployeeEntity qEmployee = QEmployeeEntity.employeeEntity;
+
         if (employeeSearchDTO.getName() != null && !employeeSearchDTO.getName().isEmpty()) {
             builder.and(qEmployee.name.containsIgnoreCase(employeeSearchDTO.getName()));
         }

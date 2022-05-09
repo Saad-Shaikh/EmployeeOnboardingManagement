@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -31,6 +32,9 @@ public class EmployeeCreateDTO {
 
     @NotNull()
     private LocalDate onboardingEndDate;
+
+    @NotNull()
+    private Set<EmployeeListDTO> mentoredBy;
 
     @NotNull()
     private EmployeeStatus status;

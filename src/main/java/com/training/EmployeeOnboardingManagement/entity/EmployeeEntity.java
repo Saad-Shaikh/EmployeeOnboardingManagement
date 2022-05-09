@@ -1,6 +1,8 @@
 package com.training.EmployeeOnboardingManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.training.EmployeeOnboardingManagement.converter.DesignationConverter;
 import com.training.EmployeeOnboardingManagement.converter.EmployeeStatusConverter;
 import com.training.EmployeeOnboardingManagement.enums.Designation;
@@ -48,21 +50,19 @@ public class EmployeeEntity {
     @Column(name = "onboarding_end_date")
     private LocalDate onboardingEndDate;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "employee_has_mentors",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "mentor_id")
     )
+    @ToString.Exclude
+    @JsonManagedReference
     private Set<EmployeeEntity> mentoredBy = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "employee_has_mentors",
-            joinColumns = @JoinColumn(name = "mentor_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
+    @ManyToMany(mappedBy = "mentoredBy")
     @ToString.Exclude
+    @JsonBackReference
     private Set<EmployeeEntity> mentorOf = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)

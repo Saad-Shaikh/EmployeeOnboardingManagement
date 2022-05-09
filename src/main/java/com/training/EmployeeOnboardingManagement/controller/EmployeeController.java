@@ -15,7 +15,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<EmployeeDetailDTO> getAllEmployees() {
+    public List<EmployeeListDTO> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 

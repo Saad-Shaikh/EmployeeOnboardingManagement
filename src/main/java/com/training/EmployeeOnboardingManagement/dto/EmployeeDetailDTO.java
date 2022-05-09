@@ -21,6 +21,6 @@ public class EmployeeDetailDTO {
     private Designation designation;
     private LocalDate onboardingStartDate;
     private LocalDate onboardingEndDate;
-    private Set<EmployeeDetailDTO> mentoredBy;
+    private Set<EmployeeListDTO> mentors;
     private EmployeeStatus status;
 }

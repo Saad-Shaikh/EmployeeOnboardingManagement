@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeService {
     EmployeeEntity getById(Integer id);
-    List<EmployeeDetailDTO> getAllEmployees();
+    List<EmployeeListDTO> getAllEmployees();
     EmployeeDetailDTO createEmployee(EmployeeCreateDTO employee);
     EmployeeDetailDTO getEmployeeById(Integer id);
     EmployeeDetailDTO updateEmployeeById(Integer id, EmployeeUpdateDTO newEmployee);

@@ -16,11 +16,8 @@ public interface EmployeeMapper {
     @Mapping(target = "project", ignore = true)
     EmployeeEntity mapCreateDTOToEntity(EmployeeCreateDTO employeeDTO);
 
+    @Mapping(target = "mentors", ignore = true)
     EmployeeDetailDTO mapEntityToDetailDTO(EmployeeEntity employee);
-
-    @Mapping(target = "mentorOf", ignore = true)
-    @Mapping(target = "project", ignore = true)
-    EmployeeEntity mapDetailDTOToEntity(EmployeeDetailDTO employeeDTO);
 
     List<EmployeeDetailDTO> mapEntityListToDetailDTOList(List<EmployeeEntity> employees);
 
@@ -46,4 +43,6 @@ public interface EmployeeMapper {
     void mapStatusPatchDTOToEntity(EmployeeStatusPatchDTO employeeDTO, @MappingTarget EmployeeEntity employee);
 
     EmployeeListDTO mapEntityToListDTO(EmployeeEntity employee);
+
+    List<EmployeeListDTO> mapEntityListToListDTOList(List<EmployeeEntity> employees);
 }
