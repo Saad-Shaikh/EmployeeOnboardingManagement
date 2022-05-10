@@ -14,6 +14,11 @@
             </column>
         </createTable>
 
+        <addPrimaryKey columnNames="employee_id, mentor_id"
+                       constraintName="PK_EMP_HAS_MENTORS"
+                       tableName="employee_has_mentors"
+                       validate="true"/>
+
         <addForeignKeyConstraint baseTableName="employee_has_mentors" baseColumnNames="employee_id"
                                  constraintName="fk_employeeHasMentors_employee" referencedTableName="employee"
                                  referencedColumnNames="id"/>

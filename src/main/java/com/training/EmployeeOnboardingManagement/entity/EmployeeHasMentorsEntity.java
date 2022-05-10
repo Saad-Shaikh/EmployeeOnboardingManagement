@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "employee_has_mentors")
+@IdClass(EmployeeHasMentorsId.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -19,6 +17,7 @@ public class EmployeeHasMentorsEntity {
     @Column(name = "employee_id")
     private Integer employeeId;
 
+    @Id
     @Column(name = "mentor_id")
     private Integer mentorId;
 }
