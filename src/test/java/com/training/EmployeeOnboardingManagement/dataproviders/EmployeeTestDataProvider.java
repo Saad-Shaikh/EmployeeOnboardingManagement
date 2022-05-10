@@ -1,6 +1,7 @@
 package com.training.EmployeeOnboardingManagement.dataproviders;
 
 import com.training.EmployeeOnboardingManagement.dto.EmployeeCreateDTO;
+import com.training.EmployeeOnboardingManagement.dto.EmployeeListDTO;
 import com.training.EmployeeOnboardingManagement.dto.EmployeeStatusPatchDTO;
 import com.training.EmployeeOnboardingManagement.dto.EmployeeUpdateDTO;
 import com.training.EmployeeOnboardingManagement.enums.Designation;
@@ -8,11 +9,12 @@ import com.training.EmployeeOnboardingManagement.enums.EmployeeStatus;
 import org.testng.annotations.DataProvider;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 public class EmployeeTestDataProvider {
     @DataProvider
     public Object[][] getEmployeeCreateDTO() {
-        return new Object[][] {{new EmployeeCreateDTO("Saad", LocalDate.of(1997, 11, 16), "NIBM, Pune", "0123456789", Designation.SOFTWARE_ENGINEER, LocalDate.now(), LocalDate.of(2022, 12, 01), EmployeeStatus.ON_PROBATION)}};
+        return new Object[][] {{new EmployeeCreateDTO("Saad", LocalDate.of(1997, 11, 16), "NIBM, Pune", "0123456789", Designation.SOFTWARE_ENGINEER, LocalDate.now(), LocalDate.of(2022, 12, 01), new HashSet<EmployeeListDTO>(), EmployeeStatus.ON_PROBATION)}};
     }
 
     @DataProvider
